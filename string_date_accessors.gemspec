@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{string_date_accessors}
-  s.version = "0.0.0"
+  s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew Bruce"]
@@ -29,7 +29,8 @@ Gem::Specification.new do |s|
      "lib/string_date_accessors.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
-     "spec/string_date_accessors_spec.rb"
+     "spec/string_date_accessors_spec.rb",
+     "string_date_accessors.gemspec"
   ]
   s.homepage = %q{http://github.com/camelpunch/string_date_accessors}
   s.rdoc_options = ["--charset=UTF-8"]
