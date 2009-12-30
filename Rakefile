@@ -6,7 +6,10 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "string_date_accessors"
     gem.summary = %Q{Get and set dates as strings on ActiveRecord-like objects}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.description = %Q{
+      This gem is useful if you don't want to use Rails' standard date helpers and would rather
+      set a text format for reading and writing dates.
+    }
     gem.email = "andrew@camelpunch.com"
     gem.homepage = "http://github.com/camelpunch/string_date_accessors"
     gem.authors = ["Andrew Bruce"]
