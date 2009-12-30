@@ -1,6 +1,9 @@
 = string_date_accessors
 
-Description goes here.
+Get and set dates as strings on ActiveRecord-like objects.
+
+This gem is useful if you don't want to use Rails' standard date helpers and would rather
+set a text format for reading and writing dates.
 
 == Note on Patches/Pull Requests
  
