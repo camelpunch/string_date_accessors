@@ -5,6 +5,40 @@ Get and set dates as strings on ActiveRecord-like objects.
 This gem is useful if you don't want to use Rails' standard date helpers and would rather
 set a text format for reading and writing dates.
 
+== Usage
+
+ require 'rubygems'
+ require 'ostruct'
+ require 'string_date_accessors'
+
+ StringDateAccessors.format = '%d/%m/%y'
+
+ class Lady < OpenStruct
+   include StringDateAccessors
+   string_date_accessors :birthday, :dying_day
+ end
+
+ thatcher = Lady.new
+
+ thatcher.birthday = '10/1/09'
+
+ puts thatcher.birthday.day
+ puts thatcher.birthday.month
+ puts thatcher.birthday.year
+
+ thatcher.dying_day = 'not dead yet'
+
+ puts thatcher.dying_day
+ puts thatcher.invalid_date_accessors.inspect
+
+=== The above outputs:
+
+ 10
+ 1
+ 2009
+ not dead yet
+ [:dying_day]
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
