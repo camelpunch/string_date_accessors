@@ -27,10 +27,6 @@ module StringDateAccessors
   end
 
   module ClassMethods
-    def format
-      StringDateAccessors.format
-    end
-
     def string_date_accessors(*attributes)
       attributes.each do |attribute|
         define_method "#{attribute}=" do |input|
