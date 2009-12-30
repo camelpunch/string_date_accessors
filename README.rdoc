@@ -39,6 +39,10 @@ set a text format for reading and writing dates.
  not dead yet
  [:dying_day]
 
+== Installation
+
+It's on gemcutter (gem install string_date_accessors).
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
