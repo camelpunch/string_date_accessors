@@ -33,7 +33,7 @@ module StringDateAccessors
           if input.respond_to?(:strftime) 
             super input 
           elsif input.empty?
-            return super nil # don't mark as set
+            return super(nil) # don't mark as set
           else 
             super StringDateAccessors.formatted(input)
           end
