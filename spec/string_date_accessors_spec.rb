@@ -12,42 +12,71 @@ end
 describe StringDateAccessors do
   before do
     StringDateAccessors.format = '%Y/%m/%d'
-    @object = StringDateInheritor.new
   end
 
-  describe "invalid_date_accessors" do
+  describe "UK format" do
     before do
-      @object.punched_on = 'bad'
-      @object.patched_up_on = '2009/12/25'
+      StringDateAccessors.format = '%d/%m/%y'
     end
 
-    it "should return the symbols associated with non-dates" do
-      @object.invalid_date_accessors.should include(:punched_on)
+    context "entering strings with slashes" do
+      subject do
+        inheritor = StringDateInheritor.new
+        inheritor.punched_on = '11/12/09'
+        inheritor.punched_on
+      end
+
+      its(:day) { should == 11 }
+      its(:month) { should == 12 }
+      its(:year) { should == 2009 }
+    end
+  end
+
+  describe "invalid dates" do
+    subject do
+      inheritor = StringDateInheritor.new
+      inheritor.punched_on = 'bad'
+      inheritor.patched_up_on = '2009/12/25'
+      inheritor
     end
 
-    it "should not return the symbols associated with dates" do
-      @object.invalid_date_accessors.should_not include(:patched_up_on)
-    end
+    its(:invalid_date_accessors) { should include(:punched_on) }
+    its(:invalid_date_accessors) { should_not include(:patched_up_on) }
   end
 
   describe "date accessor" do
-    it "should accept strings with slashes" do
-      @object.punched_on = '2011/12/11'
-      @object.punched_on.day.should == 11
-      @object.punched_on.month.should == 12
-      @object.punched_on.year.should == 2011
+    context "entering strings with slashes" do
+      subject do
+        inheritor = StringDateInheritor.new
+        inheritor.punched_on = '2011/12/11'
+        inheritor.punched_on
+      end
+
+      its(:day) { should == 11 }
+      its(:month) { should == 12 }
+      its(:year) { should == 2011 }
     end
 
-    it "should accept Date objects" do
-      @object.punched_on = Date.new(2011, 12, 11)
-      @object.punched_on.day.should == 11
-      @object.punched_on.month.should == 12
-      @object.punched_on.year.should == 2011
+    context "entering Date objects" do
+      subject do
+        inheritor = StringDateInheritor.new
+        inheritor.punched_on = Date.new(2011, 12, 11)
+        inheritor.punched_on
+      end
+
+      its(:day) { should == 11 }
+      its(:month) { should == 12 }
+      its(:year) { should == 2011 }
     end
 
-    it "should cope with blank strings" do
-      @object.punched_on = ''
-      @object.punched_on.should be_nil
+    context "entering blank strings" do
+      subject do
+        inheritor = StringDateInheritor.new
+        inheritor.punched_on = ''
+        inheritor.punched_on
+      end
+
+      it { should be_nil }
     end
   end
 end
