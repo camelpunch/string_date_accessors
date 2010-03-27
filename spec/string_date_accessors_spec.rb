@@ -78,5 +78,15 @@ describe StringDateAccessors do
 
       it { should be_nil }
     end
+
+    context "entering nil" do
+      subject do
+        inheritor = StringDateInheritor.new
+        inheritor.punched_on = nil
+        inheritor.punched_on
+      end
+
+      it { should be_nil }
+    end
   end
 end

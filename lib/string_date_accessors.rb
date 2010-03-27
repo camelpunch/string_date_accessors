@@ -32,7 +32,7 @@ module StringDateAccessors
         define_method "#{attribute}=" do |input|
           if input.respond_to?(:strftime) 
             super input 
-          elsif input.empty?
+          elsif input.nil? || input.empty?
             return super(nil) # don't mark as set
           else 
             super StringDateAccessors.formatted(input)
