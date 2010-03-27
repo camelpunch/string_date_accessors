@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/camelpunch/string_date_accessors}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Get and set dates as strings on ActiveRecord-like objects}
   s.test_files = [
     "spec/spec_helper.rb",
