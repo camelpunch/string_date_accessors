@@ -1,4 +1,5 @@
 require 'date'
+require 'active_support'
 module StringDateAccessors
   def self.date_format=(string)
     @date_format = string
@@ -21,8 +22,8 @@ module StringDateAccessors
   end
 
   def self.formatted(input)
-    DateTime.strptime(input, datetime_format)
-  rescue ArgumentError
+    DateTime.strptime(input, datetime_format).to_time
+  rescue ArgumentError, NoMethodError
     begin
       Date.strptime(input, date_format)
     rescue ArgumentError
