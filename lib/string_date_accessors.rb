@@ -1,11 +1,19 @@
 require 'date'
 module StringDateAccessors
-  def self.format=(string)
-    @format = string
+  def self.date_format=(string)
+    @date_format = string
   end
 
-  def self.format
-    @format
+  def self.date_format
+    @date_format
+  end
+
+  def self.datetime_format=(string)
+    @datetime_format = string
+  end
+
+  def self.datetime_format
+    @datetime_format
   end
 
   def self.included(klass)
@@ -13,9 +21,13 @@ module StringDateAccessors
   end
 
   def self.formatted(input)
-    Date.strptime(input, format)
+    DateTime.strptime(input, datetime_format)
   rescue ArgumentError
-    input
+    begin
+      Date.strptime(input, date_format)
+    rescue ArgumentError
+      input
+    end
   end
 
   def invalid_date_accessors

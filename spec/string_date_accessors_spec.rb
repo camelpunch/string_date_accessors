@@ -11,15 +11,30 @@ end
 
 describe StringDateAccessors do
   before do
-    StringDateAccessors.format = '%Y/%m/%d'
+    StringDateAccessors.date_format = '%Y/%m/%d'
   end
 
   describe "UK format" do
     before do
-      StringDateAccessors.format = '%d/%m/%y'
+      StringDateAccessors.date_format = '%d/%m/%y'
+      StringDateAccessors.datetime_format = '%d/%m/%y %H:%M'
     end
 
-    context "entering strings with slashes" do
+    context "entering time strings with slashes" do
+      subject do
+        inheritor = StringDateInheritor.new
+        inheritor.punched_on = '11/12/09 15:03'
+        inheritor.punched_on
+      end
+
+      its(:min) { should == 3 }
+      its(:hour) { should == 15 }
+      its(:day) { should == 11 }
+      its(:month) { should == 12 }
+      its(:year) { should == 2009 }
+    end
+
+    context "entering date strings with slashes" do
       subject do
         inheritor = StringDateInheritor.new
         inheritor.punched_on = '11/12/09'
@@ -64,6 +79,20 @@ describe StringDateAccessors do
         inheritor.punched_on
       end
 
+      its(:day) { should == 11 }
+      its(:month) { should == 12 }
+      its(:year) { should == 2011 }
+    end
+
+    context "entering DateTime objects" do
+      subject do
+        inheritor = StringDateInheritor.new
+        inheritor.punched_on = DateTime.new(2011, 12, 11, 15, 30)
+        inheritor.punched_on
+      end
+
+      its(:min) { should == 30 }
+      its(:hour) { should == 15 }
       its(:day) { should == 11 }
       its(:month) { should == 12 }
       its(:year) { should == 2011 }
