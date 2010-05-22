@@ -14,6 +14,17 @@ describe StringDateAccessors do
     StringDateAccessors.date_format = '%Y/%m/%d'
   end
 
+  describe "formatted" do
+    context "datetime" do
+      it "should add the current timezone" do
+        input = '21/05/10 10:30'
+        StringDateAccessors.datetime_format = '%d/%m/%y %H:%M'
+        Time.stub(:zone).and_return('(GMT+00:00) London')
+        StringDateAccessors.formatted(input).zone.should == '+01:00'
+      end
+    end
+  end
+
   describe "UK format" do
     before do
       StringDateAccessors.date_format = '%d/%m/%y'

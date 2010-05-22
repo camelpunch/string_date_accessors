@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'date'
 require 'active_support'
 module StringDateAccessors
@@ -22,13 +23,11 @@ module StringDateAccessors
   end
 
   def self.formatted(input)
-    DateTime.strptime(input, datetime_format).to_time
-  rescue ArgumentError, NoMethodError
-    begin
-      Date.strptime(input, date_format)
-    rescue ArgumentError
-      input
-    end
+    date = Date.strptime(input, date_format)
+    zone = date.to_time.zone
+    DateTime.strptime("#{input} #{zone}", "#{datetime_format} %Z").to_time
+  rescue ArgumentError, NoMethodError => e
+    date ? date : input
   end
 
   def invalid_date_accessors
