@@ -1,12 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 class ModelBase
-  attr_accessor :punched_on, :patched_up_on
+  attr_accessor :punched_on, :patched_up_on, :fell_at
 end
 
 class StringDateInheritor < ModelBase
   include StringDateAccessors
-  string_date_accessors :punched_on, :patched_up_on
+  string_date_accessors :punched_on, :patched_up_on, :fell_at
 end
 
 describe StringDateAccessors do
@@ -16,11 +16,11 @@ describe StringDateAccessors do
 
   describe "formatted" do
     context "datetime" do
-      it "should add the current timezone" do
+      it "should convert to UTC" do
         input = '21/05/10 10:30'
         StringDateAccessors.datetime_format = '%d/%m/%y %H:%M'
         Time.stub(:zone).and_return('(GMT+00:00) London')
-        StringDateAccessors.formatted(input).zone.should == '+01:00'
+        StringDateAccessors.formatted(input).zone.should == 'UTC'
       end
     end
   end
@@ -43,6 +43,7 @@ describe StringDateAccessors do
       its(:day) { should == 11 }
       its(:month) { should == 12 }
       its(:year) { should == 2009 }
+      it { should be_a(Time) }
     end
 
     context "entering date strings with slashes" do
@@ -55,6 +56,7 @@ describe StringDateAccessors do
       its(:day) { should == 11 }
       its(:month) { should == 12 }
       its(:year) { should == 2009 }
+      it { should be_a(Date) }
     end
   end
 
@@ -63,11 +65,13 @@ describe StringDateAccessors do
       inheritor = StringDateInheritor.new
       inheritor.punched_on = 'bad'
       inheritor.patched_up_on = '2009/12/25'
+      inheritor.fell_at = '25/05/10 15:00'
       inheritor
     end
 
     its(:invalid_date_accessors) { should include(:punched_on) }
     its(:invalid_date_accessors) { should_not include(:patched_up_on) }
+    its(:invalid_date_accessors) { should_not include(:fell_at) }
   end
 
   describe "date accessor" do
@@ -81,6 +85,7 @@ describe StringDateAccessors do
       its(:day) { should == 11 }
       its(:month) { should == 12 }
       its(:year) { should == 2011 }
+      it { should be_a(Date) }
     end
 
     context "entering Date objects" do

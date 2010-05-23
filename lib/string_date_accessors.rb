@@ -25,13 +25,19 @@ module StringDateAccessors
   def self.formatted(input)
     date = Date.strptime(input, date_format)
     zone = date.to_time.zone
-    DateTime.strptime("#{input} #{zone}", "#{datetime_format} %Z").to_time
+    datetime_utc = DateTime.strptime("#{input} #{zone}", "#{datetime_format} %Z").to_time.utc
+    Time.utc(datetime_utc.year, 
+             datetime_utc.month, 
+             datetime_utc.day, 
+             datetime_utc.hour,
+             datetime_utc.min,
+             datetime_utc.sec)
   rescue ArgumentError, NoMethodError => e
     date ? date : input
   end
 
   def invalid_date_accessors
-    string_date_accessors_set.reject {|attribute| send(attribute).is_a?(Date)}
+    string_date_accessors_set.reject {|attribute| send(attribute).respond_to?(:strftime)}
   end
 
   def string_date_accessors_set
