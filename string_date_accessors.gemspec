@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{string_date_accessors}
-  s.version = "0.0.5"
+  s.version = "0.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew Bruce"]
-  s.date = %q{2010-03-28}
+  s.date = %q{2010-05-23}
   s.description = %q{
       This gem is useful if you don't want to use Rails' standard date helpers and would rather
       set a text format for reading and writing dates.
