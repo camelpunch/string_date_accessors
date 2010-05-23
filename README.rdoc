@@ -3,7 +3,7 @@
 Get and set dates as strings on ActiveRecord-like objects.
 
 This gem is useful if you don't want to use Rails' standard date helpers and would rather
-set a text format for reading and writing dates.
+set a text format for reading and writing dates and datetimes.
 
 == Usage
 
@@ -11,7 +11,7 @@ set a text format for reading and writing dates.
  require 'ostruct'
  require 'string_date_accessors'
 
- StringDateAccessors.format = '%d/%m/%y'
+ StringDateAccessors.date_format = '%d/%m/%y'
 
  class Lady < OpenStruct
    include StringDateAccessors
@@ -41,7 +41,7 @@ set a text format for reading and writing dates.
 
 == Installation
 
-It's on gemcutter (gem install string_date_accessors).
+It's on gemcutter (gem install string_date_accessors). It requires active_support.
 
 == Note on Patches/Pull Requests
  
@@ -56,4 +56,4 @@ It's on gemcutter (gem install string_date_accessors).
 
 == Copyright
 
-Copyright (c) 2009 Andrew Bruce. See LICENSE for details.
+Copyright (c) 2010 Andrew Bruce. See LICENSE for details.
