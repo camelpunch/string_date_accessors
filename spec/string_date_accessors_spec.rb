@@ -34,15 +34,32 @@ describe StringDateAccessors do
     context "entering time strings with slashes" do
       subject do
         inheritor = StringDateInheritor.new
-        inheritor.punched_on = '11/12/09 15:03'
+
+        offset = Time.zone_offset(Time.now.zone)
+
+        @utc_min = 3
+        @utc_hour = 15
+        @utc_day = 11
+        @utc_month = 12
+        @utc_year = 2009
+
+        @dt = DateTime.new(@utc_year, 
+                           @utc_month, 
+                           @utc_day, 
+                           @utc_hour,
+                           @utc_min).utc + offset.seconds
+
+        string_to_set = "#{@dt.day}/#{@dt.month}/#{@dt.year.to_s[2..3]} #{@dt.hour}:#{@dt.min}"
+
+        inheritor.punched_on = string_to_set
         inheritor.punched_on
       end
 
-      its(:min) { should == 3 }
-      its(:hour) { should == 15 }
-      its(:day) { should == 11 }
-      its(:month) { should == 12 }
-      its(:year) { should == 2009 }
+      its(:min) { should == @utc_min }
+      its(:hour) { should == @utc_hour }
+      its(:day) { should == @utc_day }
+      its(:month) { should == @utc_month }
+      its(:year) { should == @utc_year }
       it { should be_a(Time) }
     end
 
